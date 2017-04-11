@@ -8,20 +8,19 @@ import java.awt.*;
  * this class creates a complete dice.
  */
 public class DicePrint extends JPanel {
+    //variables to store the number roled for passing forwards later.
+    public int diceRoll;
     //values for displacing the dots on each induvidual dice.
     private int top = 15;
     private int mid = 61;
     private int bot = 109;
-
-    //variables to store the number roled for passing forwards later.
-    public int diceRoll;
 
     /**
      * setting background color of dice to white.
      * setting the diceRoll to a random number for display of the correct dice and use later for other methods.
      */
     public DicePrint(int diceRoll) {
-        setBackground(Color.white);
+        setBackground(Color.decode("#ECD078"));
         this.diceRoll = diceRoll;
     }
 
@@ -45,7 +44,7 @@ public class DicePrint extends JPanel {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setColor(Color.black);
+        g2d.setColor(Color.decode("#542437"));
         g2d.drawRoundRect(0, 0, 150, 150, 38, 38);
 
 

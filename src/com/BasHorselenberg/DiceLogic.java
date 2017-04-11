@@ -13,6 +13,7 @@ public class DiceLogic {
     /**
      * When dice is initialised a random number is generated.
      * and a number is added for identifying the correct dice.
+     *
      * @param ID int for selecting the correct dice and dicepanels.
      */
     public DiceLogic(int ID) {

@@ -6,6 +6,7 @@ public class Main {
 
     /**
      * Start class, all comes from here and is redirected. Class is ready for multithreading.
+     *
      * @param args default start class.
      */
     public static void main(String[] args) {

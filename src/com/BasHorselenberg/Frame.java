@@ -16,14 +16,18 @@ public class Frame extends JFrame {
 
     //arrayList for storing the dices.
     public ArrayList<DiceLogic> diceRoll;
-
-    //creating the main frame anddifferent pannels.
+    //Colors.
+    Color cream = Color.decode("#ECD078");
+    Color brick = Color.decode("#D95B43");
+    Color deep = Color.decode("#C02942");
+    Color dark = Color.decode("#542437");
+    Color greenish = Color.decode("#53777A");
+    //creating the main frame and different pannels.
     private JFrame frame;
     private JPanel input;
     private JPanel result;
     private JPanel output;
     private JPanel tips;
-
     //Textfields for the in and output of the game.
     private JTextField wakValue;
     private JTextField ijsbeerValue;
@@ -32,16 +36,13 @@ public class Frame extends JFrame {
     private JTextField wakResult;
     private JTextField ijsbeerResult;
     private JTextField pinguinResult;
-
     //Textfields for the output of statistics.
     private JTextField winField;
     private JTextField losField;
     private JTextField gameField;
-
     //Textfield for tips
     private JTextField errorField;
     private JTextField tipField;
-
     //creating values for classwide use.
     private int wins;
     private int losses;
@@ -70,9 +71,9 @@ public class Frame extends JFrame {
         curLosses = 0;
 
         // changing background color to gray.
-        frame.getContentPane().setBackground(Color.green);
+        frame.getContentPane().setBackground(cream);
         // setting width and hight of the screen.
-        frame.setSize(1200, 800);
+        frame.setSize(1021, 600);
         // make sure the programs quits properly when closed.
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // allow the pannel to show up.
@@ -130,8 +131,8 @@ public class Frame extends JFrame {
         //adding the input panel and placing it correctly, disabeling the content manager.
         input = new JPanel();
         frame.add(input);
-        input.setBackground(Color.blue);
-        input.setBounds(5, 370, 1006, 35);
+        input.setBackground(dark);
+        input.setBounds(5, 370, 996, 35);
         input.setLayout(null);
 
         //labels for the input panel.
@@ -153,54 +154,72 @@ public class Frame extends JFrame {
         //placing the labels.
         //wak Label.
         input.add(wakLabel);
-        wakLabel.setForeground(Color.WHITE);
+        wakLabel.setForeground(cream);
         Dimension wakLabelSize = wakLabel.getPreferredSize();
         wakLabel.setBounds(25, 5, wakLabelSize.width, wakLabelSize.height);
 
         //ijsbeer Label.
         input.add(ijsbeerLabel);
-        ijsbeerLabel.setForeground(Color.WHITE);
+        ijsbeerLabel.setForeground(cream);
         Dimension ijsbeerLabelSize = ijsbeerLabel.getPreferredSize();
         ijsbeerLabel.setBounds(140, 5, ijsbeerLabelSize.width, ijsbeerLabelSize.height);
 
         //pinguin Label.
         input.add(pinguinLabel);
-        pinguinLabel.setForeground(Color.WHITE);
+        pinguinLabel.setForeground(cream);
         Dimension pinguinLabelSize = pinguinLabel.getPreferredSize();
         pinguinLabel.setBounds(255, 5, pinguinLabelSize.width, pinguinLabelSize.height);
 
         //set Dice ammout Label.
         input.add(setDiceLabel);
-        setDiceLabel.setForeground(Color.WHITE);
+        setDiceLabel.setForeground(cream);
         Dimension setDiceLabelSize = setDiceLabel.getPreferredSize();
         setDiceLabel.setBounds(480, 5, setDiceLabelSize.width, setDiceLabelSize.height);
 
         //placing the textFields.
         //wak Text Field.
         input.add(wakValue);
+        wakValue.setForeground(cream);
+        wakValue.setBackground(brick);
+        wakValue.setBorder(BorderFactory.createLineBorder(greenish));
         Dimension wakValueSize = wakValue.getPreferredSize();
         wakValue.setBounds(80, 5, wakValueSize.width, wakValueSize.height);
+        wakValue.setEnabled(false);
 
         //ijsbeer Text Field.
         input.add(ijsbeerValue);
+        ijsbeerValue.setForeground(cream);
+        ijsbeerValue.setBackground(brick);
+        ijsbeerValue.setBorder(BorderFactory.createLineBorder(greenish));
         Dimension ijsbeerValueSize = ijsbeerValue.getPreferredSize();
         ijsbeerValue.setBounds(200, 5, ijsbeerValueSize.width, ijsbeerValueSize.height);
+        ijsbeerValue.setEnabled(false);
 
         //pinguin Text Field
         input.add(pinguinValue);
+        pinguinValue.setForeground(cream);
+        pinguinValue.setBackground(brick);
+        pinguinValue.setBorder(BorderFactory.createLineBorder(greenish));
         Dimension pinguinValueSize = pinguinValue.getPreferredSize();
         pinguinValue.setBounds(320, 5, pinguinValueSize.width, pinguinValueSize.height);
+        pinguinValue.setEnabled(false);
 
         //set Dice Text Field.
         input.add(setDice);
+        setDice.setForeground(cream);
+        setDice.setBackground(brick);
+        setDice.setBorder(BorderFactory.createLineBorder(greenish));
         Dimension setDiceSize = setDice.getPreferredSize();
         setDice.setBounds(575, 5, setDiceSize.width, setDiceSize.height);
 
         //adding Button
         //Check Button
         input.add(commit);
+        commit.setForeground(cream);
+        commit.setBackground(brick);
+        commit.setBorder(BorderFactory.createLineBorder(greenish));
         Dimension commitButtonSize = commit.getPreferredSize();
-        commit.setBounds(400, 5, commitButtonSize.width, commitButtonSize.height);
+        commit.setBounds(400, 5, commitButtonSize.width + 5, commitButtonSize.height);
         commit.setEnabled(false);
         //adding ActionListener check.
         commit.addActionListener(new ActionListener() {
@@ -209,14 +228,29 @@ public class Frame extends JFrame {
                 if (!wakValue.getText().isEmpty() && !ijsbeerValue.getText().isEmpty() && !pinguinValue.getText().isEmpty()) {
                     String regex = "\\d+";
                     if (wakValue.getText().matches(regex) && ijsbeerValue.getText().matches(regex) && pinguinValue.getText().matches(regex)) {
+                        //checking if the game has been won or lost
                         check();
+                        //updating the textfields with the new scores.
                         updateTextFields();
+                        //give a tip if criteria are met.
                         giveTips();
+
+                        //enabless the dice selection to allow for a new game.
                         dice.setEnabled(true);
-                        commit.setEnabled(false);
-                        errorHandeling(0);
                         setDice.setEnabled(true);
+
+                        //disabeling the input fields and button.
+                        commit.setEnabled(false);
+                        wakValue.setEnabled(false);
+                        ijsbeerValue.setEnabled(false);
+                        pinguinValue.setEnabled(false);
+
+                        //setting error code to 0 to remove any previous errors.
+                        errorHandeling(0);
                     } else {
+                        //checking what went wrong with the input.
+                        //setting base error code int.
+                        //modifying the error code based on what happened. This will later be used in the errorHandeler class to show the correct error message.
                         int errorCode = 10;
                         if (!wakValue.getText().matches(regex)) {
                             errorCode++;
@@ -230,6 +264,9 @@ public class Frame extends JFrame {
                         errorHandeling(errorCode);
                     }
                 } else {
+                    //checking what went wrong with the input.
+                    //setting base error code int.
+                    //modifying the error code based on what happened. This will later be used in the errorHandeler class to show the correct error message.
                     int errorCode = 0;
                     if (wakValue.getText().isEmpty()) {
                         errorCode++;
@@ -248,12 +285,16 @@ public class Frame extends JFrame {
 
         //Dice set Button
         input.add(dice);
+        dice.setForeground(cream);
+        dice.setBackground(brick);
+        dice.setBorder(BorderFactory.createLineBorder(greenish));
         Dimension diceSize = dice.getPreferredSize();
-        dice.setBounds(610, 5, diceSize.width, diceSize.height);
+        dice.setBounds(610, 5, diceSize.width + 5, diceSize.height);
         //adding ActionListener dice.
         dice.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //checking if a dice amount has been entered.
                 String diceFetch = setDice.getText();
                 if (!diceFetch.isEmpty()) {
                     //regular expresion to check if a number has been entered.
@@ -261,18 +302,26 @@ public class Frame extends JFrame {
                     if (diceFetch.matches(regex)) {
                         //fetch the amount of dice and place in a int.
                         int diceAmount = Integer.valueOf(diceFetch);
+                        //checking if the amount of dice is a valid playable amount.
                         if (diceAmount >= 3 && diceAmount <= 12) {
                             removeDice();
                             addDice(diceAmount);
                             resetInput();
 
-
+                            //disabeling the dice selection part.
                             dice.setEnabled(false);
                             setDice.setEnabled(false);
+
+                            //enabeling the player input for playing the game.
+                            wakValue.setEnabled(true);
+                            ijsbeerValue.setEnabled(true);
+                            pinguinValue.setEnabled(true);
                             commit.setEnabled(true);
 
+                            //setting error handeling to 0.
                             errorHandeling(0);
                         } else {
+                            //returning the correct error message.
                             if (diceAmount < 3) {
                                 errorHandeling(10);
                             } else if (diceAmount > 12) {
@@ -282,8 +331,10 @@ public class Frame extends JFrame {
                             }
                         }
                     } else {
+                        //returning the correct error message.
                         errorHandeling(8);
                     }
+                    //returning the correct error message.
                 } else if (setDice.getText().isEmpty()) {
                     errorHandeling(9);
                 }
@@ -295,8 +346,8 @@ public class Frame extends JFrame {
         //adding result panel to the frame and setting default location and values.
         result = new JPanel();
         frame.add(result);
-        result.setBackground(Color.magenta);
-        result.setBounds(5, 410, 1006, 35);
+        result.setBackground(dark);
+        result.setBounds(5, 410, 996, 35);
         result.setLayout(null);
 
         //restult labels.
@@ -312,19 +363,19 @@ public class Frame extends JFrame {
         //placing wak Labels.
         //wak result Label.
         result.add(wakResultLabel);
-        wakResultLabel.setForeground(Color.black);
+        wakResultLabel.setForeground(cream);
         Dimension wakResultLabelSize = wakResultLabel.getPreferredSize();
         wakResultLabel.setBounds(25, 5, wakResultLabelSize.width, wakResultLabelSize.height);
 
         //ijsbeer result label.
         result.add(ijsbeerResultLabel);
-        ijsbeerResultLabel.setForeground(Color.black);
+        ijsbeerResultLabel.setForeground(cream);
         Dimension ijsbeerResultLabelSize = ijsbeerResultLabel.getPreferredSize();
         ijsbeerResultLabel.setBounds(225, 5, ijsbeerResultLabelSize.width, ijsbeerResultLabelSize.height);
 
         //pinguin result label.
         result.add(pinguinResultLabel);
-        pinguinResultLabel.setForeground(Color.black);
+        pinguinResultLabel.setForeground(cream);
         Dimension pinguinResultLabelSize = pinguinResultLabel.getPreferredSize();
         pinguinResultLabel.setBounds(430, 5, pinguinResultLabelSize.width, pinguinResultLabelSize.height);
 
@@ -332,21 +383,30 @@ public class Frame extends JFrame {
         //wak result.
         result.add(wakResult);
         wakResult.setEnabled(false);
-        wakResult.setDisabledTextColor(Color.BLACK);
+        wakResult.setForeground(cream);
+        wakResult.setBackground(brick);
+        wakResult.setBorder(BorderFactory.createLineBorder(greenish));
+        wakResult.setDisabledTextColor(cream);
         Dimension wakResultSize = wakResult.getPreferredSize();
         wakResult.setBounds(165, 5, wakResultSize.width, wakResultSize.height);
 
         //ijsbeer Textfield.
         result.add(ijsbeerResult);
         ijsbeerResult.setEnabled(false);
-        ijsbeerResult.setDisabledTextColor(Color.BLACK);
+        ijsbeerResult.setForeground(cream);
+        ijsbeerResult.setBackground(brick);
+        ijsbeerResult.setBorder(BorderFactory.createLineBorder(greenish));
+        ijsbeerResult.setDisabledTextColor(cream);
         Dimension ijsbeerResultSize = ijsbeerResult.getPreferredSize();
         ijsbeerResult.setBounds(370, 5, ijsbeerResultSize.width, ijsbeerResultSize.height);
 
         //Pinguin Textfield
         result.add(pinguinResult);
         pinguinResult.setEnabled(false);
-        pinguinResult.setDisabledTextColor(Color.BLACK);
+        pinguinResult.setForeground(cream);
+        pinguinResult.setBackground(brick);
+        pinguinResult.setBorder(BorderFactory.createLineBorder(greenish));
+        pinguinResult.setDisabledTextColor(cream);
         Dimension pinguinResultSize = pinguinResult.getPreferredSize();
         pinguinResult.setBounds(575, 5, pinguinResultSize.width, pinguinResultSize.height);
 
@@ -354,8 +414,8 @@ public class Frame extends JFrame {
         //adding result panel to the frame and setting default location and values.
         output = new JPanel();
         frame.add(output);
-        output.setBackground(Color.black);
-        output.setBounds(508, 450, 503, 300);
+        output.setBackground(dark);
+        output.setBounds(508, 450, 493, 90);
         output.setLayout(null);
 
         //Creating labels.
@@ -374,19 +434,19 @@ public class Frame extends JFrame {
         //adding labels to the panel and setting them in place.
         //winLabel.
         output.add(winLabel);
-        winLabel.setForeground(Color.WHITE);
+        winLabel.setForeground(cream);
         Dimension winlabelSize = winLabel.getPreferredSize();
         winLabel.setBounds(5, 5, winlabelSize.width, winlabelSize.height);
 
         //losLabel
         output.add(losLabel);
-        losLabel.setForeground(Color.WHITE);
+        losLabel.setForeground(cream);
         Dimension losLabelSize = losLabel.getPreferredSize();
         losLabel.setBounds(5, 25, losLabelSize.width, losLabelSize.height);
 
         //games Played Label.
         output.add(gameLabel);
-        gameLabel.setForeground(Color.WHITE);
+        gameLabel.setForeground(cream);
         Dimension gameLabelSize = gameLabel.getPreferredSize();
         gameLabel.setBounds(5, 45, gameLabelSize.width, gameLabelSize.height);
 
@@ -394,26 +454,38 @@ public class Frame extends JFrame {
         //win Field.
         output.add(winField);
         winField.setEnabled(false);
-        winField.setDisabledTextColor(Color.BLACK);
+        winField.setForeground(cream);
+        winField.setBackground(brick);
+        winField.setBorder(BorderFactory.createLineBorder(greenish));
+        winField.setDisabledTextColor(cream);
         Dimension winFieldSize = winField.getPreferredSize();
         winField.setBounds(150, 5, winFieldSize.width, winFieldSize.height);
 
         //los Field.
         output.add(losField);
         losField.setEnabled(false);
-        losField.setDisabledTextColor(Color.BLACK);
+        losField.setForeground(cream);
+        losField.setBackground(brick);
+        losField.setBorder(BorderFactory.createLineBorder(greenish));
+        losField.setDisabledTextColor(cream);
         Dimension losFieldSize = losField.getPreferredSize();
         losField.setBounds(150, 25, losFieldSize.width, losFieldSize.height);
 
         //game Field.
         output.add(gameField);
         gameField.setEnabled(false);
-        gameField.setDisabledTextColor(Color.BLACK);
+        gameField.setForeground(cream);
+        gameField.setBackground(brick);
+        gameField.setBorder(BorderFactory.createLineBorder(greenish));
+        gameField.setDisabledTextColor(cream);
         Dimension gameFieldSize = gameField.getPreferredSize();
         gameField.setBounds(150, 45, gameFieldSize.width, gameFieldSize.height);
 
         //adding reset button.
         output.add(reset);
+        reset.setForeground(cream);
+        reset.setBackground(brick);
+        reset.setBorder(BorderFactory.createLineBorder(greenish));
         Dimension resetSize = reset.getPreferredSize();
         reset.setBounds(150, 65, resetSize.width, resetSize.height);
         reset.addActionListener(new ActionListener() {
@@ -423,9 +495,15 @@ public class Frame extends JFrame {
                 resetCounters();
                 updateTextFields();
                 resetInput();
+                //activating new dice select.
                 dice.setEnabled(true);
-                commit.setEnabled(false);
                 setDice.setEnabled(true);
+
+                //disabeling play field.
+                commit.setEnabled(false);
+                wakValue.setEnabled(false);
+                ijsbeerValue.setEnabled(false);
+                pinguinValue.setEnabled(false);
             }
         });
 
@@ -433,7 +511,8 @@ public class Frame extends JFrame {
         //adding tips panel to the frame and setting default location and values.
         tips = new JPanel();
         frame.add(tips);
-        tips.setBounds(5, 450, 503, 300);
+        tips.setBackground(dark);
+        tips.setBounds(5, 450, 493, 90);
         tips.setLayout(null);
 
         //initialising textfields.
@@ -443,7 +522,10 @@ public class Frame extends JFrame {
         //adding error field.
         tips.add(errorField);
         errorField.setEnabled(false);
-        errorField.setDisabledTextColor(Color.BLACK);
+        errorField.setForeground(cream);
+        errorField.setBackground(brick);
+        errorField.setBorder(BorderFactory.createLineBorder(greenish));
+        errorField.setDisabledTextColor(cream);
         Dimension errorFieldSize = errorField.getPreferredSize();
         errorField.setBounds(5, 25, errorFieldSize.width, errorFieldSize.height);
         errorField.setVisible(false);
@@ -451,9 +533,12 @@ public class Frame extends JFrame {
         //adding tips field.
         tips.add(tipField);
         tipField.setEnabled(false);
-        tipField.setDisabledTextColor(Color.BLACK);
+        tipField.setForeground(cream);
+        tipField.setBackground(brick);
+        tipField.setBorder(BorderFactory.createLineBorder(greenish));
+        tipField.setDisabledTextColor(cream);
         Dimension tipFieldSize = tipField.getPreferredSize();
-        tipField.setBounds(5, 150, tipFieldSize.width, tipFieldSize.height);
+        tipField.setBounds(5, 50, tipFieldSize.width, tipFieldSize.height);
         tipField.setVisible(false);
     }
 
@@ -510,26 +595,26 @@ public class Frame extends JFrame {
 
         if (Integer.valueOf(wakFetch) == totalWak) {
             wakValue.setBackground(Color.GREEN);
-            wakValue.setDisabledTextColor(Color.BLACK);
+            wakValue.setDisabledTextColor(cream);
         } else {
             wakValue.setBackground(Color.RED);
-            wakValue.setDisabledTextColor(Color.BLACK);
+            wakValue.setDisabledTextColor(cream);
         }
 
         if (Integer.valueOf(ijsFetch) == totalIJs) {
             ijsbeerValue.setBackground(Color.GREEN);
-            ijsbeerValue.setDisabledTextColor(Color.BLACK);
+            ijsbeerValue.setDisabledTextColor(cream);
         } else {
             ijsbeerValue.setBackground(Color.RED);
-            ijsbeerValue.setDisabledTextColor(Color.BLACK);
+            ijsbeerValue.setDisabledTextColor(cream);
         }
 
         if (Integer.valueOf(pinFetch) == totalPin) {
             pinguinValue.setBackground(Color.GREEN);
-            pinguinValue.setDisabledTextColor(Color.BLACK);
+            pinguinValue.setDisabledTextColor(cream);
         } else {
             pinguinValue.setBackground(Color.RED);
-            pinguinValue.setDisabledTextColor(Color.BLACK);
+            pinguinValue.setDisabledTextColor(cream);
         }
 
         if (Integer.valueOf(wakFetch) == totalWak && Integer.valueOf(ijsFetch) == totalIJs && Integer.valueOf(pinFetch) == totalPin) {
@@ -565,19 +650,27 @@ public class Frame extends JFrame {
     private void resetInput() {
         //reset wak field.
         wakValue.setEnabled(true);
-        wakValue.setBackground(Color.WHITE);
+        wakValue.setBackground(brick);
         wakValue.setText(null);
 
         //reset ijsbeer field.
         ijsbeerValue.setEnabled(true);
-        ijsbeerValue.setBackground(Color.WHITE);
+        ijsbeerValue.setBackground(brick);
         ijsbeerValue.setText(null);
 
         //reset pinguin field.
         pinguinValue.setEnabled(true);
-        pinguinValue.setBackground(Color.WHITE);
+        pinguinValue.setBackground(brick);
         pinguinValue.setText(null);
 
+        //reset wakResult.
+        wakResult.setText("");
+
+        //reset ijsbeerResult
+        ijsbeerResult.setText("");
+
+        //reset pinguinResult
+        pinguinResult.setText("");
     }
 
     /**
@@ -592,7 +685,7 @@ public class Frame extends JFrame {
             int tipNr = (new Random().nextInt(6));
             switch (tipNr) {
                 case 0:
-                    tip = "Het aantal ogen op voor en achterkant zijn altijd 7.";
+                    tip = "Het aantal ogen op voor en achterkant zijn opgeteld altijd 7.";
                     break;
                 case 1:
                     tip = "Het aantal pinguins op de zuidpool is het tegevenovergestende van de ijsberen.";
